@@ -1,26 +1,121 @@
 <!doctype html>
-<html lang="pt-BR"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Painel — Victor & Mariana</title>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Painel dos noivos — Victor & Mariana</title>
 <style>
-*{box-sizing:border-box}body{margin:0;background:#f4f4f2;color:#111;font-family:Arial,sans-serif}.wrap{max-width:1000px;margin:auto;padding:25px}.top{display:flex;justify-content:space-between;align-items:center;margin-bottom:25px}.top h1{font:34px Georgia,serif}.back{padding:10px 14px;background:#111;color:#fff;text-decoration:none;font-size:12px}.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:15px}.box{background:#fff;border:1px solid #ddd;padding:22px}.box h2{font:23px Georgia,serif;margin-top:0}.full{grid-column:1/-1}.field{margin:12px 0}.field label{display:block;font-size:10px;text-transform:uppercase;letter-spacing:1px;color:#666;margin-bottom:6px}.field input{width:100%;padding:12px;border:1px solid #ccc}.btn{background:#111;color:#fff;border:0;padding:12px 16px;cursor:pointer;margin:4px 4px 4px 0}.danger{background:#777}.item{display:flex;gap:8px;margin:8px 0}.item input{flex:1}.table{width:100%;border-collapse:collapse}.table th,.table td{padding:10px;border-bottom:1px solid #ddd;text-align:left;font-size:13px}@media(max-width:700px){.grid{grid-template-columns:1fr}.full{grid-column:auto}.top{align-items:flex-start;gap:10px}}
-</style></head><body><div class="wrap">
-<div class="top"><h1>Painel dos noivos</h1><a class="back" href="index.html">Ver site</a></div>
-<div class="grid">
-<div class="box"><h2>Resumo</h2><p>Confirmações: <b id="nr">0</b></p><p>Presentes reservados: <b id="ng">0</b></p><p>Créditos registrados: <b id="nc">0</b></p><button class="btn" onclick="exportData()">Exportar dados</button><button class="btn danger" onclick="clearData()">Limpar respostas</button></div>
-<div class="box"><h2>Evento</h2><div class="field"><label>Data</label><input id="date"></div><div class="field"><label>Horário</label><input id="time"></div><div class="field"><label>Local</label><input id="place"></div><button class="btn" onclick="saveEvent()">Salvar</button></div>
-<div class="box"><h2>Créditos</h2><div id="creditEdit"></div><button class="btn" onclick="addCredit()">+ Valor</button><button class="btn" onclick="saveCredits()">Salvar</button></div>
-<div class="box full"><h2>Presentes físicos</h2><div id="giftEdit"></div><button class="btn" onclick="addGift()">+ Presente</button><button class="btn" onclick="saveGifts()">Salvar lista</button></div>
-<div class="box full"><h2>Confirmações de presença</h2><div id="rsvpTable"></div></div>
-<div class="box full"><h2>Créditos escolhidos</h2><div id="creditTable"></div></div>
-</div></div>
+*{box-sizing:border-box}body{margin:0;background:#f4f4f2;color:#111;font-family:Arial,sans-serif}.wrap{max-width:1050px;margin:auto;padding:24px}.top{display:flex;justify-content:space-between;align-items:center;margin-bottom:22px}.top h1{font:34px Georgia,serif;margin:0}.back,.btn{padding:11px 15px;background:#111;color:#fff;border:0;text-decoration:none;font-size:12px;cursor:pointer}.danger{background:#777}.grid{display:grid;grid-template-columns:repeat(2,1fr);gap:15px}.box{background:#fff;border:1px solid #ddd;padding:22px}.full{grid-column:1/-1}.box h2{font:24px Georgia,serif;margin-top:0}.field{margin:12px 0}.field label{display:block;font-size:10px;text-transform:uppercase;letter-spacing:1px;color:#666;margin-bottom:6px}.field input,.field textarea{width:100%;padding:12px;border:1px solid #ccc;font:inherit}.actions{display:flex;gap:8px;flex-wrap:wrap}.stat{font-size:30px;font-weight:bold}.table{width:100%;border-collapse:collapse}.table th,.table td{padding:10px;border-bottom:1px solid #ddd;text-align:left;font-size:13px;vertical-align:top}.login{max-width:430px;margin:10vh auto}.msg{padding:12px;background:#eee;margin:12px 0;display:none}.msg.show{display:block}.hidden{display:none}@media(max-width:700px){.grid{grid-template-columns:1fr}.full{grid-column:auto}.top{align-items:flex-start;gap:12px}.top h1{font-size:28px}.table{display:block;overflow:auto}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div id="loginBox" class="login box">
+    <h1 style="font:32px Georgia,serif">Painel dos noivos</h1>
+    <p>Entre com o e-mail e a senha do administrador.</p>
+    <div class="field"><label>E-mail</label><input id="email" type="email" autocomplete="username"></div>
+    <div class="field"><label>Senha</label><input id="password" type="password" autocomplete="current-password"></div>
+    <button class="btn" id="loginBtn">Entrar</button>
+    <div id="loginMsg" class="msg"></div>
+  </div>
+
+  <div id="app" class="hidden">
+    <div class="top"><h1>Painel dos noivos</h1><div class="actions"><a class="back" href="index.html">Ver site</a><button class="btn danger" id="logoutBtn">Sair</button></div></div>
+
+    <div class="grid">
+      <div class="box">
+        <h2>Resumo</h2>
+        <p><span class="stat" id="totalRsvp">0</span><br>respostas</p>
+        <p><span class="stat" id="totalYes">0</span><br>confirmados</p>
+        <p><span class="stat" id="totalNo">0</span><br>não poderão ir</p>
+        <button class="btn" id="refreshBtn">Atualizar</button>
+      </div>
+
+      <div class="box">
+        <h2>Informações do evento</h2>
+        <div class="field"><label>Data</label><input id="date_text"></div>
+        <div class="field"><label>Horário</label><input id="time_text"></div>
+        <div class="field"><label>Local</label><input id="place"></div>
+        <div class="field"><label>Complemento do local</label><input id="place_detail"></div>
+        <button class="btn" id="saveEvent">Salvar informações</button>
+      </div>
+
+      <div class="box">
+        <h2>Presentes</h2>
+        <div class="field"><label>Link da lista Havan</label><input id="havan_url"></div>
+        <div class="field"><label>Chave PIX</label><input id="pix_key"></div>
+        <div class="field"><label>Nome no PIX</label><input id="pix_name"></div>
+        <div class="field"><label>Cidade no PIX</label><input id="pix_city"></div>
+        <button class="btn" id="saveGifts">Salvar presentes</button>
+      </div>
+
+      <div class="box">
+        <h2>Confirmações</h2>
+        <p>Os convidados confirmam diretamente pelo site. As respostas ficam salvas online e aparecem aqui.</p>
+        <button class="btn" id="exportBtn">Exportar CSV</button>
+      </div>
+
+      <div class="box full">
+        <h2>Lista de confirmações</h2>
+        <div id="tableWrap">Carregando...</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script>
-const def={date:"05/12",time:"14h",place:"Esplendor Garden",gifts:[["Jogo de panelas","R$ 450"],["Air Fryer","R$ 600"],["Jogo de copos","R$ 100"],["Liquidificador","R$ 250"],["Jogo de pratos","R$ 300"],["Conjunto de talheres","R$ 180"]],credits:[50,100,150,200,300,500]};
-let d=JSON.parse(localStorage.getItem("chaData")||"null")||def;
-function render(){date.value=d.date;time.value=d.time;place.value=d.place;giftEdit.innerHTML=d.gifts.map((g,i)=>`<div class="item"><input id="gn${i}" value="${g[0]}"><input id="gv${i}" value="${g[1]}"></div>`).join("");creditEdit.innerHTML=d.credits.map((v,i)=>`<div class="item"><input id="cv${i}" type="number" value="${v}"></div>`).join("");let r=JSON.parse(localStorage.getItem("rsvps")||"[]");nr.textContent=r.length;ng.textContent=(JSON.parse(localStorage.getItem("reservas")||"[]")).length;let c=JSON.parse(localStorage.getItem("creditos")||"[]");nc.textContent=c.length;rsvpTable.innerHTML=r.length?`<table class="table"><tr><th>Nome</th><th>Presença</th><th>Acompanhantes</th><th>WhatsApp</th></tr>${r.map(x=>`<tr><td>${x.nome}</td><td>${x.presenca}</td><td>${x.acompanhantes}</td><td>${x.telefone||""}</td></tr>`).join("")}</table>`:"Nenhuma confirmação ainda.";creditTable.innerHTML=c.length?`<table class="table"><tr><th>Nome</th><th>Valor</th><th>Data</th></tr>${c.map(x=>`<tr><td>${x.nome}</td><td>R$ ${x.valor}</td><td>${x.data}</td></tr>`).join("")}</table>`:"Nenhuma contribuição registrada."}
-function saveEvent(){d.date=date.value;d.time=time.value;d.place=place.value;save();alert("Informações salvas.")}
-function saveGifts(){d.gifts=d.gifts.map((_,i)=>[document.getElementById("gn"+i).value,document.getElementById("gv"+i).value]);save();alert("Lista salva.")}
-function saveCredits(){d.credits=d.credits.map((_,i)=>Number(document.getElementById("cv"+i).value)).filter(Boolean);save();alert("Valores salvos.")}
-function addGift(){d.gifts.push(["Novo presente","R$ 0"]);render()}function addCredit(){d.credits.push(0);render()}function save(){localStorage.setItem("chaData",JSON.stringify(d));render()}
-function exportData(){let out={config:d,rsvps:JSON.parse(localStorage.getItem("rsvps")||"[]"),reservas:JSON.parse(localStorage.getItem("reservas")||"[]"),creditos:JSON.parse(localStorage.getItem("creditos")||"[]")};let a=document.createElement("a");a.href=URL.createObjectURL(new Blob([JSON.stringify(out,null,2)],{type:"application/json"}));a.download="dados-cha-victor-mariana.json";a.click()}
-function clearData(){if(confirm("Apagar todas as confirmações, reservas e créditos deste navegador?")){localStorage.removeItem("rsvps");localStorage.removeItem("reservas");localStorage.removeItem("creditos");render()}}
-render();
-</script></body></html>
+const SUPABASE_URL="https://dwzncywnhmmmyfaakbcg.supabase.co";
+const SUPABASE_KEY="sb_publishable_BAuCEukRom4xBNPoGJ26TA_2H3m2sLH";
+const sb=supabase.createClient(SUPABASE_URL,SUPABASE_KEY);
+let rsvps=[];
+
+function msg(t){const x=document.getElementById("loginMsg");x.textContent=t;x.classList.add("show");}
+async function init(){
+  const {data:{session}}=await sb.auth.getSession();
+  if(session) showApp(); else document.getElementById("loginBox").classList.remove("hidden");
+}
+async function showApp(){
+  document.getElementById("loginBox").classList.add("hidden");
+  document.getElementById("app").classList.remove("hidden");
+  await loadSettings(); await loadRsvps();
+}
+async function loadSettings(){
+  const {data,error}=await sb.from("site_settings").select("*").eq("id",1).single();
+  if(error){alert("Não consegui carregar as configurações. Confira se o banco já foi configurado.");return;}
+  ["date_text","time_text","place","place_detail","havan_url","pix_key","pix_name","pix_city"].forEach(k=>document.getElementById(k).value=data[k]||"");
+}
+async function saveSettings(fields){
+  const obj={};fields.forEach(k=>obj[k]=document.getElementById(k).value.trim());
+  const {error}=await sb.from("site_settings").update(obj).eq("id",1);
+  alert(error?"Não foi possível salvar.":"Salvo com sucesso!");
+}
+async function loadRsvps(){
+  const {data,error}=await sb.from("rsvps").select("*").order("created_at",{ascending:false});
+  if(error){document.getElementById("tableWrap").textContent="Erro ao carregar confirmações.";return;}
+  rsvps=data||[];
+  totalRsvp.textContent=rsvps.length;totalYes.textContent=rsvps.filter(x=>x.attending).length;totalNo.textContent=rsvps.filter(x=>!x.attending).length;
+  if(!rsvps.length){tableWrap.textContent="Nenhuma confirmação ainda.";return;}
+  tableWrap.innerHTML=`<table class="table"><tr><th>Nome</th><th>Presença</th><th>Acomp.</th><th>WhatsApp</th><th>Mensagem</th><th>Data</th></tr>`+
+  rsvps.map(x=>`<tr><td>${esc(x.name)}</td><td>${x.attending?"Sim":"Não"}</td><td>${x.companions||0}</td><td>${esc(x.phone||"")}</td><td>${esc(x.message||"")}</td><td>${new Date(x.created_at).toLocaleString("pt-BR")}</td></tr>`).join("")+"</table>";
+}
+function esc(v){return String(v??"").replace(/[&<>"']/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"}[m]));}
+function csv(){
+  const rows=[["Nome","Presença","Acompanhantes","WhatsApp","Mensagem","Data"],...rsvps.map(x=>[x.name,x.attending?"Sim":"Não",x.companions||0,x.phone||"",x.message||"",new Date(x.created_at).toLocaleString("pt-BR")])];
+  const s=rows.map(r=>r.map(v=>`"${String(v).replaceAll('"','""')}"`).join(";")).join("\n");
+  const a=document.createElement("a");a.href=URL.createObjectURL(new Blob(["\ufeff"+s],{type:"text/csv;charset=utf-8"}));a.download="confirmacoes-cha-victor-mariana.csv";a.click();
+}
+loginBtn.onclick=async()=>{
+  loginBtn.disabled=true;msg("Entrando...");
+  const {error}=await sb.auth.signInWithPassword({email:email.value.trim(),password:password.value});
+  loginBtn.disabled=false;if(error){msg("E-mail ou senha incorretos.");return;}await showApp();
+};
+logoutBtn.onclick=()=>sb.auth.signOut().then(()=>location.reload());
+saveEvent.onclick=()=>saveSettings(["date_text","time_text","place","place_detail"]);
+saveGifts.onclick=()=>saveSettings(["havan_url","pix_key","pix_name","pix_city"]);
+refreshBtn.onclick=()=>showApp();
+exportBtn.onclick=csv;
+sb.auth.onAuthStateChange((event,session)=>{if(event==="SIGNED_IN"&&session)showApp();});
+init();
+</script>
+</body>
+</html>

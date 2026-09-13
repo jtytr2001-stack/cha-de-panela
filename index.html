@@ -1,34 +1,188 @@
 <!doctype html>
-<html lang="pt-BR"><head>
-<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Victor & Mariana — Chá de Panela</title>
 <style>
-*{box-sizing:border-box}body{margin:0;font-family:Arial,sans-serif;color:#111;background:#fff}a{text-decoration:none;color:inherit}
+*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;font-family:Arial,sans-serif;color:#111;background:#fff}a{text-decoration:none;color:inherit}
 .hero{min-height:100vh;display:grid;grid-template-columns:1fr 1fr;background:#111;color:#fff}.photo{background:url("foto-casal.jpeg") center/cover;min-height:100vh}.copy{display:flex;align-items:center;padding:9vw}.tag{text-transform:uppercase;letter-spacing:4px;font-size:11px;color:#aaa}.names{font:500 clamp(55px,7vw,90px)/.9 Georgia,serif;margin:20px 0}.copy p{max-width:430px;line-height:1.8;color:#ddd}.date{letter-spacing:2px;margin-top:28px}.btn{display:inline-block;border:1px solid #fff;padding:14px 20px;margin-top:28px;font-size:12px;text-transform:uppercase;letter-spacing:2px}
 section{padding:80px 6%}.center{text-align:center}.eyebrow{text-transform:uppercase;letter-spacing:3px;font-size:10px;color:#777}.title{font:500 46px Georgia,serif;margin:15px 0 25px}.intro{max-width:650px;margin:auto;line-height:1.8;color:#555}
 .details{background:#f4f4f2}.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;margin-top:35px;background:#ddd}.card{background:#fff;padding:38px;text-align:center}.card b{display:block;font:28px Georgia,serif;margin:10px 0}.card small{color:#777;text-transform:uppercase;letter-spacing:1px}
-.tabs{display:flex;justify-content:center;gap:8px;margin:35px 0}.tab{padding:12px 18px;border:1px solid #aaa;background:white;cursor:pointer}.tab.active{background:#111;color:#fff}.panel{display:none}.panel.active{display:block}.gifts{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}.gift{border:1px solid #ddd;padding:24px;min-height:190px;display:flex;flex-direction:column}.gift h3{font:22px Georgia,serif;margin:0 0 8px}.gift p{color:#777;line-height:1.5;font-size:13px}.price{margin-top:auto;font-weight:bold}.reserve{border:0;background:#111;color:#fff;padding:12px;margin-top:15px;cursor:pointer}.reserve:disabled{background:#ccc}
-.form{max-width:650px;margin:30px auto}.row{display:grid;grid-template-columns:1fr 1fr;gap:12px}.field{margin-bottom:14px}.field label{display:block;font-size:10px;letter-spacing:1px;text-transform:uppercase;color:#666;margin-bottom:6px}.field input,.field select,.field textarea{width:100%;padding:14px;border:1px solid #ccc;font:inherit}.submit{width:100%;background:#111;color:#fff;border:0;padding:16px;text-transform:uppercase;letter-spacing:2px;cursor:pointer}
+.gift-options{display:grid;grid-template-columns:repeat(2,1fr);gap:20px;max-width:900px;margin:40px auto 0}.gift-option{border:1px solid #ddd;padding:38px;text-align:center;background:#fff}.gift-icon{font-size:30px}.gift-option h3{font:26px Georgia,serif;margin:15px 0 10px}.gift-option p{color:#666;line-height:1.7}.option-btn{display:inline-block;background:#111;color:#fff;padding:14px 20px;margin-top:12px;font-size:12px;text-transform:uppercase;letter-spacing:1.5px;border:0;cursor:pointer}
+.pixbox{margin:20px auto 0;max-width:430px;padding:25px;border:1px solid #ddd;background:#f8f8f6}.pixkey{font-weight:bold;word-break:break-word;margin:12px 0}.copybtn{background:#fff;color:#111;border:1px solid #111;padding:11px 16px;cursor:pointer}
+.qr{display:block;width:220px;height:220px;margin:20px auto;background:#fff}
+.form{max-width:650px;margin:30px auto}.row{display:grid;grid-template-columns:1fr 1fr;gap:12px}.field{margin-bottom:14px}.field label{display:block;font-size:10px;letter-spacing:1px;text-transform:uppercase;color:#666;margin-bottom:6px}.field input,.field select,.field textarea{width:100%;padding:14px;border:1px solid #ccc;font:inherit}.submit{width:100%;background:#111;color:#fff;border:0;padding:16px;text-transform:uppercase;letter-spacing:2px;cursor:pointer}.submit:disabled{opacity:.6}
+.notice{max-width:650px;margin:15px auto;padding:14px;background:#f4f4f2;text-align:center;display:none}.notice.show{display:block}
 footer{background:#111;color:#fff;text-align:center;padding:55px}.footername{font:35px Georgia,serif}
-@media(max-width:700px){.hero{grid-template-columns:1fr}.photo{min-height:58vh}.copy{padding:45px 8%;min-height:42vh}.grid,.gifts,.row{grid-template-columns:1fr}.title{font-size:38px}}
-</style></head>
+@media(max-width:700px){.hero{grid-template-columns:1fr}.photo{min-height:58vh}.copy{padding:45px 8%;min-height:42vh}.grid,.gift-options,.row{grid-template-columns:1fr}.title{font-size:38px}.qr{width:190px;height:190px}}
+</style>
+</head>
 <body>
-<div class="hero"><div class="photo"></div><div class="copy"><div><div class="tag">Chá de Panela</div><div class="names">Victor<br>& Mariana</div><p>Um novo capítulo começa — e queremos celebrar esse momento ao lado de quem faz parte da nossa história.</p><div class="date">05 DE DEZEMBRO · 14H</div><a class="btn" href="#presenca">Confirmar presença</a></div></div></div>
-<section class="center"><div class="eyebrow">Você é nosso convidado</div><div class="title">Vamos celebrar juntos?</div><p class="intro">Preparamos este espaço para reunir todas as informações do nosso chá de panela. Sua presença será muito especial para nós.</p></section>
-<section class="details"><div class="center"><div class="eyebrow">O evento</div><div class="title">Anote na agenda</div></div><div class="grid"><div class="card"><small>Data</small><b id="dateText">05/12</b><small>Sábado</small></div><div class="card"><small>Horário</small><b id="timeText">14h</b><small>Início</small></div><div class="card"><small>Local</small><b id="placeText">Esplendor Garden</b><small>Salão de festas</small></div></div></section>
-<section><div class="center"><div class="eyebrow">Com carinho</div><div class="title">Lista de presentes</div><p class="intro">Escolha um presente físico ou uma contribuição em crédito. Não utilizamos Pix.</p></div>
-<div class="tabs"><button class="tab active" onclick="tab('fisicos',this)">Presentes físicos</button><button class="tab" onclick="tab('creditos',this)">Crédito</button></div>
-<div id="fisicos" class="panel active"><div class="gifts" id="gifts"></div></div>
-<div id="creditos" class="panel"><div class="form center"><p class="intro">Escolha o valor da contribuição. A forma de pagamento será combinada posteriormente.</p><div class="tabs" id="credits"></div></div></div></section>
-<section class="details" id="presenca"><div class="center"><div class="eyebrow">Confirmação</div><div class="title">Você vem?</div><p class="intro">Confirme sua presença para nos ajudar a organizar tudo.</p></div>
-<form class="form" id="rsvp"><div class="row"><div class="field"><label>Nome</label><input required id="nome"></div><div class="field"><label>WhatsApp</label><input id="telefone"></div></div><div class="row"><div class="field"><label>Presença</label><select id="presencaSelect" required><option value="">Selecione</option><option>Sim, estarei presente!</option><option>Infelizmente não poderei ir</option></select></div><div class="field"><label>Acompanhantes</label><select id="acomp"><option>0</option><option>1</option><option>2</option><option>3</option></select></div></div><div class="field"><label>Mensagem</label><textarea id="msg"></textarea></div><button class="submit">Confirmar presença</button></form></section>
-<footer><div class="footername">Victor & Mariana</div><p>05.12 · 14h · Esplendor Garden</p><p style="font-size:10px;color:#888">Área dos noivos: <a href="admin.html">Painel administrativo</a></p></footer>
+<div class="hero">
+  <div class="photo"></div>
+  <div class="copy">
+    <div>
+      <div class="tag">Chá de Panela</div>
+      <div class="names">Victor<br>& Mariana</div>
+      <p>Um novo capítulo começa — e queremos celebrar esse momento ao lado de quem faz parte da nossa história.</p>
+      <div class="date" id="heroDate">05 DE DEZEMBRO · 14H</div>
+      <a class="btn" href="#presenca">Confirmar presença</a>
+    </div>
+  </div>
+</div>
+
+<section class="center">
+  <div class="eyebrow">Você é nosso convidado</div>
+  <div class="title">Vamos celebrar juntos?</div>
+  <p class="intro">Preparamos este espaço para reunir todas as informações do nosso chá de panela. Sua presença será muito especial para nós.</p>
+</section>
+
+<section class="details">
+  <div class="center">
+    <div class="eyebrow">O evento</div>
+    <div class="title">Anote na agenda</div>
+  </div>
+  <div class="grid">
+    <div class="card"><small>Data</small><b id="dateText">05/12</b><small id="dayText">Sábado</small></div>
+    <div class="card"><small>Horário</small><b id="timeText">14h</b><small>Início</small></div>
+    <div class="card"><small>Local</small><b id="placeText">Esplendor Garden</b><small id="placeDetail">Salão de festas</small></div>
+  </div>
+</section>
+
+<section>
+  <div class="center">
+    <div class="eyebrow">Com carinho</div>
+    <div class="title">Lista de presentes</div>
+    <p class="intro">Sua presença já é um presente. Mas, se quiser nos presentear, deixamos duas opções especiais para você.</p>
+  </div>
+
+  <div class="gift-options">
+    <div class="gift-option">
+      <div class="gift-icon">🎁</div>
+      <h3>Presente físico</h3>
+      <p>Escolha o presente que quiser diretamente na nossa lista da Havan.</p>
+      <a id="havanLink" class="option-btn" href="#" target="_blank" rel="noopener">Ver lista da Havan</a>
+    </div>
+
+    <div class="gift-option">
+      <div class="gift-icon">♡</div>
+      <h3>Presente via PIX</h3>
+      <p>Se preferir, você também pode nos presentear através do PIX.</p>
+      <div class="pixbox">
+        <div>Chave PIX</div>
+        <div class="pixkey" id="pixKey">marianazeurgo@gmail.com</div>
+        <button class="copybtn" id="copyPix">Copiar chave PIX</button>
+        <img id="qr" class="qr" alt="QR Code para pagamento via PIX">
+        <small id="pixStatus">Aponte a câmera do celular para o QR Code.</small>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="details" id="presenca">
+  <div class="center">
+    <div class="eyebrow">Confirmação</div>
+    <div class="title">Você vem?</div>
+    <p class="intro">Confirme sua presença para nos ajudar a organizar tudo.</p>
+  </div>
+
+  <div id="notice" class="notice"></div>
+
+  <form class="form" id="rsvp">
+    <div class="row">
+      <div class="field"><label>Nome</label><input required id="nome"></div>
+      <div class="field"><label>WhatsApp</label><input id="telefone"></div>
+    </div>
+    <div class="row">
+      <div class="field">
+        <label>Presença</label>
+        <select id="presencaSelect" required>
+          <option value="">Selecione</option>
+          <option value="Sim, estarei presente!">Sim, estarei presente!</option>
+          <option value="Infelizmente não poderei ir">Infelizmente não poderei ir</option>
+        </select>
+      </div>
+      <div class="field">
+        <label>Acompanhantes</label>
+        <select id="acomp"><option value="0">0</option><option value="1">1</option><option value="2">2</option><option value="3">3</option></select>
+      </div>
+    </div>
+    <div class="field"><label>Mensagem</label><textarea id="msg"></textarea></div>
+    <button class="submit" id="submitRsvp">Confirmar presença</button>
+  </form>
+</section>
+
+<footer>
+  <div class="footername">Victor & Mariana</div>
+  <p id="footerInfo">05.12 · 14h · Esplendor Garden</p>
+  <p style="font-size:10px;color:#888"><a href="admin.html">Área dos noivos</a></p>
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script>
-const def={date:"05/12",time:"14h",place:"Esplendor Garden",gifts:[["Jogo de panelas","R$ 450"],["Air Fryer","R$ 600"],["Jogo de copos","R$ 100"],["Liquidificador","R$ 250"],["Jogo de pratos","R$ 300"],["Conjunto de talheres","R$ 180"]],credits:[50,100,150,200,300,500]};
-let data=JSON.parse(localStorage.getItem("chaData")||"null")||def;
-function render(){dateText.textContent=data.date;timeText.textContent=data.time;placeText.textContent=data.place;gifts.innerHTML=data.gifts.map((g,i)=>`<div class="gift"><h3>${g[0]}</h3><p>Um presente para fazer parte da nossa nova casa.</p><div class="price">${g[1]}</div><button class="reserve" onclick="reserve(${i},this)">Reservar presente</button></div>`).join("");credits.innerHTML=data.credits.map(v=>`<button class="tab" onclick="credit(${v})">R$ ${v}</button>`).join("")}
-function reserve(i,b){let r=JSON.parse(localStorage.getItem("reservas")||"[]");if(r.includes(i))return;b.disabled=true;b.textContent="Reservado";r.push(i);localStorage.setItem("reservas",JSON.stringify(r));alert("Presente reservado!")}
-function credit(v){let nome=prompt("Digite seu nome:");if(!nome)return;let c=JSON.parse(localStorage.getItem("creditos")||"[]");c.push({nome,valor:v,data:new Date().toLocaleString("pt-BR")});localStorage.setItem("creditos",JSON.stringify(c));alert("Contribuição registrada: R$ "+v)}
-function tab(id,b){document.querySelectorAll(".panel").forEach(x=>x.classList.remove("active"));document.querySelectorAll(".tab").forEach(x=>x.classList.remove("active"));document.getElementById(id).classList.add("active");b.classList.add("active")}
-rsvp.onsubmit=e=>{e.preventDefault();let x=JSON.parse(localStorage.getItem("rsvps")||"[]");x.push({nome:nome.value,telefone:telefone.value,presenca:presencaSelect.value,acompanhantes:acomp.value,mensagem:msg.value,data:new Date().toLocaleString("pt-BR")});localStorage.setItem("rsvps",JSON.stringify(x));alert("Presença confirmada! Obrigado ❤️");e.target.reset()};render();
-</script></body></html>
+const SUPABASE_URL = "https://dwzncywnhmmmyfaakbcg.supabase.co";
+const SUPABASE_KEY = "sb_publishable_BAuCEukRom4xBNPoGJ26TA_2H3m2sLH";
+const sb = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+
+const FALLBACK = {
+  date_text:"05/12/2026", time_text:"14h", place:"Esplendor Garden",
+  place_detail:"Salão de festas",
+  havan_url:"https://lista.havan.com.br/Convidado/ItensListaPresente/960534",
+  pix_key:"marianazeurgo@gmail.com", pix_name:"MARIANA ZEURGO", pix_city:"SAO PAULO"
+};
+
+function escapeHtml(v){return String(v??"").replace(/[&<>"']/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"}[m]));}
+function dayName(dateText){
+  const m=String(dateText).match(/(\d{2})\/(\d{2})\/?(\d{4})?/);
+  if(!m)return "";
+  const d=new Date(Number(m[3]||2026),Number(m[2])-1,Number(m[1]));
+  return ["Domingo","Segunda-feira","Terça-feira","Quarta-feira","Quinta-feira","Sexta-feira","Sábado"][d.getDay()];
+}
+function crc16(payload){
+  let crc=0xFFFF;
+  for(let c of payload){crc ^= c.charCodeAt(0)<<8; for(let i=0;i<8;i++) crc=(crc&0x8000)?((crc<<1)^0x1021)&0xFFFF:(crc<<1)&0xFFFF;}
+  return crc.toString(16).toUpperCase().padStart(4,"0");
+}
+function field(id,v){return id.length.toString().padStart(2,"0")+id+v.length.toString().padStart(2,"0")+v;}
+function pixPayload(key,name,city){
+  const merchant=field("26",field("00","br.gov.bcb.pix")+field("01",key));
+  let p="000201"+merchant+field("52","0000")+field("53","986")+field("58","BR")+field("59",name.slice(0,25))+field("60",city.slice(0,15))+ "6304";
+  return p+crc16(p);
+}
+function showNotice(text,ok=true){notice.textContent=text;notice.style.background=ok?"#f4f4f2":"#eee";notice.classList.add("show");setTimeout(()=>notice.classList.remove("show"),6000);}
+
+function render(data){
+  document.getElementById("dateText").textContent=data.date_text;
+  document.getElementById("dayText").textContent=dayName(data.date_text);
+  document.getElementById("timeText").textContent=data.time_text;
+  document.getElementById("placeText").textContent=data.place;
+  document.getElementById("placeDetail").textContent=data.place_detail;
+  document.getElementById("heroDate").textContent=(data.date_text+" · "+data.time_text).toUpperCase();
+  document.getElementById("footerInfo").textContent=data.date_text+" · "+data.time_text+" · "+data.place;
+  const h=document.getElementById("havanLink"); h.href=data.havan_url;
+  document.getElementById("pixKey").textContent=data.pix_key;
+  document.getElementById("qr").src="https://api.qrserver.com/v1/create-qr-code/?size=500x500&data="+encodeURIComponent(pixPayload(data.pix_key,data.pix_name||"VICTOR E MARIANA",data.pix_city||"SAO PAULO"));
+}
+async function loadSettings(){
+  const {data,error}=await sb.from("site_settings").select("*").eq("id",1).maybeSingle();
+  render(!error && data ? data : FALLBACK);
+}
+document.getElementById("copyPix").onclick=async()=>{
+  const text=document.getElementById("pixKey").textContent;
+  try{await navigator.clipboard.writeText(text);document.getElementById("pixStatus").textContent="Chave PIX copiada!";}catch(e){document.getElementById("pixStatus").textContent="Selecione e copie a chave PIX acima.";}
+};
+document.getElementById("rsvp").onsubmit=async e=>{
+  e.preventDefault();
+  const btn=document.getElementById("submitRsvp");btn.disabled=true;btn.textContent="Enviando...";
+  const payload={name:document.getElementById("nome").value.trim(),phone:document.getElementById("telefone").value.trim(),attending:document.getElementById("presencaSelect").value==="Sim, estarei presente!",companions:Number(document.getElementById("acomp").value),message:document.getElementById("msg").value.trim()};
+  const {error}=await sb.from("rsvps").insert(payload);
+  btn.disabled=false;btn.textContent="Confirmar presença";
+  if(error){showNotice("Não foi possível confirmar agora. Tente novamente em instantes.",false);return;}
+  showNotice("Presença registrada com sucesso! Obrigado ❤️");
+  e.target.reset();
+};
+loadSettings();
+</script>
+</body>
+</html>
