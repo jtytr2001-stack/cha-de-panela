@@ -189,13 +189,22 @@ function render(data){
   document.getElementById("footerInfo").textContent=data.date_text+" · "+data.time_text+" · "+data.place;
   const h=document.getElementById("havanLink"); h.href=data.havan_url;
   document.getElementById("pixKey").textContent=data.pix_key;
+  document.getElementById("copyPix").textContent=data.pix_copy_button||"Copiar chave PIX";
   document.getElementById("qr").src="https://api.qrserver.com/v1/create-qr-code/?size=500x500&data="+encodeURIComponent(pixPayload(data.pix_key,data.pix_name||"VICTOR E MARIANA",data.pix_city||"SAO PAULO"));
 }
+render(FALLBACK);
+window.siteData={...FALLBACK};
+
 async function loadSettings(){
-  const {data,error}=await sb.from("site_settings").select("*").eq("id",1).maybeSingle();
-  const raw=!error&&data?data:{};
-  window.siteData={...FALLBACK,...Object.fromEntries(Object.entries(raw).map(([k,v])=>[k,(v===null||v===undefined||String(v).trim()==="")?FALLBACK[k]:v]))};
-  render(window.siteData);
+  try{
+    const {data,error}=await sb.from("site_settings").select("*").eq("id",1).maybeSingle();
+    const raw=!error&&data?data:{};
+    window.siteData={...FALLBACK,...Object.fromEntries(Object.entries(raw).map(([k,v])=>[k,(v===null||v===undefined||String(v).trim()==="")?FALLBACK[k]:v]))};
+    render(window.siteData);
+  }catch(e){
+    window.siteData={...FALLBACK};
+    render(window.siteData);
+  }
 }
 document.getElementById("copyPix").onclick=async()=>{
   const text=document.getElementById("pixKey").textContent;
