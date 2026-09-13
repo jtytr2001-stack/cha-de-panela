@@ -193,7 +193,9 @@ function render(data){
 }
 async function loadSettings(){
   const {data,error}=await sb.from("site_settings").select("*").eq("id",1).maybeSingle();
-  window.siteData=!error&&data?data:FALLBACK; render(window.siteData);
+  const raw=!error&&data?data:{};
+  window.siteData={...FALLBACK,...Object.fromEntries(Object.entries(raw).map(([k,v])=>[k,(v===null||v===undefined||String(v).trim()==="")?FALLBACK[k]:v]))};
+  render(window.siteData);
 }
 document.getElementById("copyPix").onclick=async()=>{
   const text=document.getElementById("pixKey").textContent;
