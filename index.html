@@ -28,11 +28,11 @@ footer{background:#0b0b0b;color:#fff;text-align:center;padding:43px 22px}.footer
     <img src="foto-casal.jpeg" alt="Victor e Mariana">
     <div class="hero-content">
       <div class="micro" id="heroTag">Chá de Panela</div>
-      <div class="hero-title">Victor<br>&amp; Mariana</div>
-      <div class="couple">Um novo capítulo começa</div>
+      <div class="hero-title"><span id="coupleNames">Victor<br>&amp; Mariana</span></div>
+      <div class="couple" id="heroSubtitle">Um novo capítulo começa</div>
       <p class="hero-copy" id="heroText">Um novo capítulo começa — e queremos celebrar esse momento ao lado de quem faz parte da nossa história.</p>
       <div class="hero-date" id="heroDate">05/12/2026 · 14h</div>
-      <a class="hero-btn" href="#presenca">Confirmar presença</a>
+      <a class="hero-btn" id="heroButton" href="#presenca">Confirmar presença</a>
     </div>
   </div>
 </header>
@@ -50,12 +50,12 @@ footer{background:#0b0b0b;color:#fff;text-align:center;padding:43px 22px}.footer
   <div class="center">
     <div class="eyebrow" id="eventEyebrow">O evento</div>
     <div class="title" id="eventTitle">Anote na agenda</div>
-    <p class="lead">Um momento especial para celebrar o começo de uma nova fase.</p>
+    <p class="lead" id="eventIntro">Um momento especial para celebrar o começo de uma nova fase.</p>
   </div>
   <div class="detail-grid">
-    <div class="detail-card"><div class="detail-icon">□</div><div class="detail-label">Data</div><div class="detail-value" id="dateText">05/12/2026</div><div class="detail-small" id="dayText">Sábado</div></div>
-    <div class="detail-card"><div class="detail-icon">◷</div><div class="detail-label">Horário</div><div class="detail-value" id="timeText">14h</div><div class="detail-small">Início</div></div>
-    <div class="detail-card"><div class="detail-icon">⌖</div><div class="detail-label">Local</div><div class="detail-value" id="placeText">Esplendor Garden</div><div class="detail-small" id="placeDetail">Salão de festas</div></div>
+    <div class="detail-card"><div class="detail-icon">□</div><div class="detail-label" id="dateLabel">Data</div><div class="detail-value" id="dateText">05/12/2026</div><div class="detail-small" id="dayText">Sábado</div></div>
+    <div class="detail-card"><div class="detail-icon">◷</div><div class="detail-label" id="timeLabel">Horário</div><div class="detail-value" id="timeText">14h</div><div class="detail-small" id="timeDetail">Início</div></div>
+    <div class="detail-card"><div class="detail-icon">⌖</div><div class="detail-label" id="placeLabel">Local</div><div class="detail-value" id="placeText">Esplendor Garden</div><div class="detail-small" id="placeDetail">Salão de festas</div></div>
   </div>
 </section>
 
@@ -91,22 +91,22 @@ footer{background:#0b0b0b;color:#fff;text-align:center;padding:43px 22px}.footer
   <div class="notice" id="notice"></div>
   <form class="form" id="rsvp">
     <div class="form-row">
-      <div class="field"><label>Nome</label><input id="nome" required></div>
-      <div class="field"><label>WhatsApp</label><input id="telefone"></div>
+      <div class="field"><label id="nameLabel">Nome</label><input id="nome" required></div>
+      <div class="field"><label id="phoneLabel">WhatsApp</label><input id="telefone"></div>
     </div>
     <div class="form-row">
-      <div class="field"><label>Presença</label><select id="presencaSelect" required><option value="">Selecione</option><option>Sim, estarei presente!</option><option>Infelizmente não poderei ir</option></select></div>
-      <div class="field"><label>Acompanhantes</label><select id="acomp"><option value="0">0</option><option value="1">1</option><option value="2">2</option><option value="3">3</option></select></div>
+      <div class="field"><label id="attendanceLabel">Presença</label><select id="presencaSelect" required><option id="attendancePlaceholder" value="">Selecione</option><option id="yesOption">Sim, estarei presente!</option><option id="noOption">Infelizmente não poderei ir</option></select></div>
+      <div class="field"><label id="companionsLabel">Acompanhantes</label><select id="acomp"><option value="0">0</option><option value="1">1</option><option value="2">2</option><option value="3">3</option></select></div>
     </div>
-    <div class="field"><label>Mensagem</label><textarea id="msg"></textarea></div>
+    <div class="field"><label id="messageLabel">Mensagem</label><textarea id="msg"></textarea></div>
     <button class="submit" id="submitRsvp">Confirmar presença →</button>
   </form>
 </section>
 
 <footer>
   <div class="footer-name" id="footerText">Victor &amp; Mariana</div>
-  <div class="footer-sub">Chá de Panela · 2026</div>
-  <a class="admin-link" href="admin.html">Área dos noivos</a>
+  <div class="footer-sub" id="footerSubtitle">Chá de Panela · 2026</div>
+  <a class="admin-link" id="adminLink" href="admin.html">Área dos noivos</a>
 </footer>
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
@@ -116,6 +116,7 @@ const SUPABASE_KEY="sb_publishable_BAuCEukRom4xBNPoGJ26TA_2H3m2sLH";
 let sb=null;try{if(window.supabase?.createClient)sb=window.supabase.createClient(SUPABASE_URL,SUPABASE_KEY)}catch(e){}
 
 const FALLBACK={
+couple_names:"Victor & Mariana",hero_subtitle:"Um novo capítulo começa",hero_button:"Confirmar presença",event_intro:"Um momento especial para celebrar o começo de uma nova fase.",date_label:"Data",time_label:"Horário",time_detail:"Início",place_label:"Local",
 date_text:"05/12/2026",time_text:"14h",place:"Esplendor Garden",place_detail:"Salão de festas",
 havan_url:"https://lista.havan.com.br/Convidado/ItensListaPresente/960534",pix_key:"marianazeurgo@gmail.com",
 hero_tag:"Chá de Panela",hero_text:"Um novo capítulo começa — e queremos celebrar esse momento ao lado de quem faz parte da nossa história.",
@@ -124,21 +125,24 @@ event_eyebrow:"O evento",event_title:"Anote na agenda",gift_eyebrow:"Com carinho
 gift_intro:"Sua presença já é um presente. Mas, se quiser nos presentear, deixamos duas opções especiais para você.",
 physical_title:"Presente físico",physical_text:"Escolha o presente que quiser diretamente na nossa lista da Havan.",physical_button:"Ver lista da Havan",
 pix_title:"Presente via PIX",pix_text:"Se preferir, você também pode nos presentear através do PIX.",pix_copy_button:"Copiar chave PIX",
-rsvp_eyebrow:"Confirmação",rsvp_title:"Você vem?",rsvp_intro:"Confirme sua presença para nos ajudar a organizar tudo.",rsvp_button:"Confirmar presença",
+rsvp_eyebrow:"Confirmação",rsvp_title:"Você vem?",rsvp_intro:"Confirme sua presença para nos ajudar a organizar tudo.",rsvp_button:"Confirmar presença",name_label:"Nome",phone_label:"WhatsApp",attendance_label:"Presença",attendance_placeholder:"Selecione",yes_option:"Sim, estarei presente!",no_option:"Infelizmente não poderei ir",companions_label:"Acompanhantes",message_label:"Mensagem",footer_subtitle:"Chá de Panela · 2026",admin_link_text:"Área dos noivos",pix_copy_button:"Copiar chave PIX",
 success_message:"Presença registrada com sucesso! Obrigado ❤️",error_message:"Não foi possível confirmar agora. Tente novamente em instantes.",footer_text:"Victor & Mariana"
 };
-const TEXT={heroTag:"hero_tag",heroText:"hero_text",introEyebrow:"intro_eyebrow",introTitle:"intro_title",introText:"intro_text",eventEyebrow:"event_eyebrow",eventTitle:"event_title",giftEyebrow:"gift_eyebrow",giftTitle:"gift_title",giftIntro:"gift_intro",physicalTitle:"physical_title",physicalText:"physical_text",physicalButton:"physical_button",pixTitle:"pix_title",pixText:"pix_text",rsvpEyebrow:"rsvp_eyebrow",rsvpTitle:"rsvp_title",rsvpIntro:"rsvp_intro",submitRsvp:"rsvp_button",footerText:"footer_text"};
+const TEXT={coupleNames:"couple_names",heroSubtitle:"hero_subtitle",heroButton:"hero_button",heroTag:"hero_tag",heroText:"hero_text",introEyebrow:"intro_eyebrow",introTitle:"intro_title",introText:"intro_text",eventEyebrow:"event_eyebrow",eventTitle:"event_title",eventIntro:"event_intro",dateLabel:"date_label",timeLabel:"time_label",timeDetail:"time_detail",placeLabel:"place_label",giftEyebrow:"gift_eyebrow",giftTitle:"gift_title",giftIntro:"gift_intro",physicalTitle:"physical_title",physicalText:"physical_text",physicalButton:"physical_button",pixTitle:"pix_title",pixText:"pix_text",rsvpEyebrow:"rsvp_eyebrow",rsvpTitle:"rsvp_title",rsvpIntro:"rsvp_intro",submitRsvp:"rsvp_button",nameLabel:"name_label",phoneLabel:"phone_label",attendanceLabel:"attendance_label",attendancePlaceholder:"attendance_placeholder",yesOption:"yes_option",noOption:"no_option",companionsLabel:"companions_label",messageLabel:"message_label",footerSubtitle:"footer_subtitle",adminLink:"admin_link_text",footerText:"footer_text"};
 function dayName(v){let m=String(v||"").match(/(\d{2})\/(\d{2})\/?(\d{4})?/);if(!m)return"";let d=new Date(+m[3],+m[2]-1,+m[1]);return["Domingo","Segunda-feira","Terça-feira","Quarta-feira","Quinta-feira","Sexta-feira","Sábado"][d.getDay()]}
 function render(d){
 Object.entries(TEXT).forEach(([id,k])=>{let e=document.getElementById(id);if(e)e.textContent=d[k]??FALLBACK[k]??""});
+const cn=document.getElementById("coupleNames"); if(cn) cn.innerHTML=String(d.couple_names??FALLBACK.couple_names).replace(/&/g,"<br>&");
+const hb=document.getElementById("heroButton"); if(hb) hb.textContent=d.hero_button??FALLBACK.hero_button;
 dateText.textContent=d.date_text??FALLBACK.date_text;dayText.textContent=dayName(d.date_text??FALLBACK.date_text);timeText.textContent=d.time_text??FALLBACK.time_text;placeText.textContent=d.place??FALLBACK.place;placeDetail.textContent=d.place_detail??FALLBACK.place_detail;
-heroDate.textContent=(d.date_text??FALLBACK.date_text)+" · "+(d.time_text??FALLBACK.time_text);havanLink.href=d.havan_url||FALLBACK.havan_url;pixKey.textContent=d.pix_key||FALLBACK.pix_key;copyPix.textContent=d.pix_copy_button||"Copiar chave PIX";
+heroDate.textContent=(d.date_text??FALLBACK.date_text)+" · "+(d.time_text??FALLBACK.time_text);havanLink.href=d.havan_url||FALLBACK.havan_url;pixKey.textContent=d.pix_key||FALLBACK.pix_key;copyPix.textContent=d.pix_copy_button||FALLBACK.pix_copy_button;
 }
-render(FALLBACK);
-async function loadSettings(){if(!sb)return;try{let {data,error}=await sb.from("site_settings").select("*").eq("id",1).maybeSingle();if(error||!data)return;let d={...FALLBACK};Object.keys(FALLBACK).forEach(k=>{if(data[k]!=null&&String(data[k]).trim()!=="")d[k]=data[k]});render(d)}catch(e){}}
+window.siteData={...FALLBACK};
+render(window.siteData);
+async function loadSettings(){if(!sb)return;try{let {data,error}=await sb.from("site_settings").select("*").eq("id",1).maybeSingle();if(error||!data)return;let d={...FALLBACK};Object.keys(FALLBACK).forEach(k=>{if(data[k]!=null&&String(data[k]).trim()!=="")d[k]=data[k]});window.siteData=d;render(d)}catch(e){}}
 loadSettings();
 copyPix.onclick=async()=>{try{await navigator.clipboard.writeText(pixKey.textContent);copyPix.textContent="Chave copiada!";setTimeout(()=>copyPix.textContent="Copiar chave PIX",1800)}catch(e){}};
-rsvp.onsubmit=async e=>{e.preventDefault();if(!sb){showNotice(FALLBACK.error_message);return}submitRsvp.disabled=true;try{let {error}=await sb.from("rsvps").insert({nome:nome.value.trim(),telefone:telefone.value.trim(),presenca:presencaSelect.value,acompanhantes:Number(acomp.value||0),mensagem:msg.value.trim()});if(error)throw error;showNotice(FALLBACK.success_message);rsvp.reset()}catch(err){showNotice(FALLBACK.error_message)}finally{submitRsvp.disabled=false}};
+rsvp.onsubmit=async e=>{e.preventDefault();if(!sb){showNotice(FALLBACK.error_message);return}submitRsvp.disabled=true;try{let {error}=await sb.from("rsvps").insert({name:nome.value.trim(),phone:telefone.value.trim(),attending:presencaSelect.value===((window.siteData&&siteData.yes_option)||FALLBACK.yes_option),companions:Number(acomp.value||0),message:msg.value.trim()});if(error)throw error;showNotice(FALLBACK.success_message);rsvp.reset()}catch(err){showNotice(FALLBACK.error_message)}finally{submitRsvp.disabled=false}};
 function showNotice(t){notice.textContent=t;notice.classList.add("show");setTimeout(()=>notice.classList.remove("show"),6000)}
 </script>
 </body>
