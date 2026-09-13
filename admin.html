@@ -18,6 +18,15 @@
     <div id="loginMsg" class="msg"></div>
   </div>
 
+  <div id="resetBox" class="login box hidden">
+    <h1 style="font:32px Georgia,serif">Criar nova senha</h1>
+    <p>Digite uma nova senha para o painel dos noivos.</p>
+    <div class="field"><label>Nova senha</label><input id="newPassword" type="password" autocomplete="new-password"></div>
+    <div class="field"><label>Confirmar nova senha</label><input id="newPassword2" type="password" autocomplete="new-password"></div>
+    <button class="btn" id="resetBtn">Salvar nova senha</button>
+    <div id="resetMsg" class="msg"></div>
+  </div>
+
   <div id="app" class="hidden">
     <div class="top"><h1>Painel dos noivos</h1><div class="actions"><a class="back" href="index.html">Ver site</a><button class="btn danger" id="logoutBtn">Sair</button></div></div>
 
@@ -100,10 +109,19 @@ const SUPABASE_URL="https://dwzncywnhmmmyfaakbcg.supabase.co";
 const SUPABASE_KEY="sb_publishable_BAuCEukRom4xBNPoGJ26TA_2H3m2sLH";
 const sb=supabase.createClient(SUPABASE_URL,SUPABASE_KEY);
 let rsvps=[];
+let recoveryMode = new URLSearchParams(location.hash.replace(/^#/, "")).get("type") === "recovery";
 
 function msg(t){const x=document.getElementById("loginMsg");x.textContent=t;x.classList.add("show");}
+function resetMsg(t){const x=document.getElementById("resetMsg");x.textContent=t;x.classList.add("show");}
+function showReset(){
+  recoveryMode=true;
+  document.getElementById("loginBox").classList.add("hidden");
+  document.getElementById("app").classList.add("hidden");
+  document.getElementById("resetBox").classList.remove("hidden");
+}
 async function init(){
   const {data:{session}}=await sb.auth.getSession();
+  if(recoveryMode){showReset();return;}
   if(session) showApp(); else document.getElementById("loginBox").classList.remove("hidden");
 }
 async function showApp(){
@@ -143,10 +161,29 @@ loginBtn.onclick=async()=>{
 };
 logoutBtn.onclick=()=>sb.auth.signOut().then(()=>location.reload());
 saveEvent.onclick=()=>saveSettings(["date_text","time_text","place","place_detail"]);
-saveGifts.onclick=()=>saveSettings(["havan_url","pix_key","pix_name","pix_city"]);\nsaveTexts.onclick=()=>saveSettings(["hero_tag","hero_text","intro_eyebrow","intro_title","intro_text","event_eyebrow","event_title","gift_eyebrow","gift_title","gift_intro","physical_title","physical_text","physical_button","pix_title","pix_text","pix_label","pix_status","rsvp_eyebrow","rsvp_title","rsvp_intro","rsvp_button","success_message","error_message","footer_text"]);
+saveGifts.onclick=()=>saveSettings(["havan_url","pix_key","pix_name","pix_city"]);
+saveTexts.onclick=()=>saveSettings(["hero_tag","hero_text","intro_eyebrow","intro_title","intro_text","event_eyebrow","event_title","gift_eyebrow","gift_title","gift_intro","physical_title","physical_text","physical_button","pix_title","pix_text","pix_label","pix_status","rsvp_eyebrow","rsvp_title","rsvp_intro","rsvp_button","success_message","error_message","footer_text"]);
 refreshBtn.onclick=()=>showApp();
 exportBtn.onclick=csv;
-sb.auth.onAuthStateChange((event,session)=>{if(event==="SIGNED_IN"&&session)showApp();});
+resetBtn.onclick=async()=>{
+  const p1=document.getElementById("newPassword").value;
+  const p2=document.getElementById("newPassword2").value;
+  if(p1.length<8){resetMsg("A senha precisa ter pelo menos 8 caracteres.");return;}
+  if(p1!==p2){resetMsg("As senhas não são iguais.");return;}
+  resetBtn.disabled=true;resetMsg("Salvando nova senha...");
+  const {error}=await sb.auth.updateUser({password:p1});
+  resetBtn.disabled=false;
+  if(error){resetMsg("Não foi possível alterar a senha. Abra o link de recuperação novamente quando o Supabase permitir.");return;}
+  recoveryMode=false;
+  document.getElementById("resetBox").classList.add("hidden");
+  alert("Senha alterada com sucesso!");
+  history.replaceState({},document.title,location.pathname+location.search);
+  await showApp();
+};
+sb.auth.onAuthStateChange((event,session)=>{
+  if(event==="PASSWORD_RECOVERY"){showReset();return;}
+  if(event==="SIGNED_IN"&&session&&!recoveryMode)showApp();
+});
 init();
 </script>
 </body>
