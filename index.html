@@ -23,9 +23,9 @@ footer{background:#111;color:#fff;text-align:center;padding:55px}.footername{fon
   <div class="photo"></div>
   <div class="copy">
     <div>
-      <div class="tag">Chá de Panela</div>
+      <div class="tag" id="heroTag"></div>
       <div class="names">Victor<br>& Mariana</div>
-      <p>Um novo capítulo começa — e queremos celebrar esse momento ao lado de quem faz parte da nossa história.</p>
+      <p id="heroText"></p>
       <div class="date" id="heroDate">05 DE DEZEMBRO · 14H</div>
       <a class="btn" href="#presenca">Confirmar presença</a>
     </div>
@@ -33,15 +33,15 @@ footer{background:#111;color:#fff;text-align:center;padding:55px}.footername{fon
 </div>
 
 <section class="center">
-  <div class="eyebrow">Você é nosso convidado</div>
-  <div class="title">Vamos celebrar juntos?</div>
-  <p class="intro">Preparamos este espaço para reunir todas as informações do nosso chá de panela. Sua presença será muito especial para nós.</p>
+  <div class="eyebrow" id="introEyebrow"></div>
+  <div class="title" id="introTitle"></div>
+  <p class="intro" id="introText"></p>
 </section>
 
 <section class="details">
   <div class="center">
-    <div class="eyebrow">O evento</div>
-    <div class="title">Anote na agenda</div>
+    <div class="eyebrow" id="eventEyebrow"></div>
+    <div class="title" id="eventTitle"></div>
   </div>
   <div class="grid">
     <div class="card"><small>Data</small><b id="dateText">05/12</b><small id="dayText">Sábado</small></div>
@@ -52,29 +52,29 @@ footer{background:#111;color:#fff;text-align:center;padding:55px}.footername{fon
 
 <section>
   <div class="center">
-    <div class="eyebrow">Com carinho</div>
-    <div class="title">Lista de presentes</div>
-    <p class="intro">Sua presença já é um presente. Mas, se quiser nos presentear, deixamos duas opções especiais para você.</p>
+    <div class="eyebrow" id="giftEyebrow"></div>
+    <div class="title" id="giftTitle"></div>
+    <p class="intro" id="giftIntro"></p>
   </div>
 
   <div class="gift-options">
     <div class="gift-option">
       <div class="gift-icon">🎁</div>
-      <h3>Presente físico</h3>
-      <p>Escolha o presente que quiser diretamente na nossa lista da Havan.</p>
-      <a id="havanLink" class="option-btn" href="#" target="_blank" rel="noopener">Ver lista da Havan</a>
+      <h3 id="physicalTitle"></h3>
+      <p id="physicalText"></p>
+      <a id="havanLink" class="option-btn" href="#" target="_blank" rel="noopener"><span id="physicalButton"></span></a>
     </div>
 
     <div class="gift-option">
       <div class="gift-icon">♡</div>
-      <h3>Presente via PIX</h3>
-      <p>Se preferir, você também pode nos presentear através do PIX.</p>
+      <h3 id="pixTitle"></h3>
+      <p id="pixText"></p>
       <div class="pixbox">
-        <div>Chave PIX</div>
+        <div id="pixLabel"></div>
         <div class="pixkey" id="pixKey">marianazeurgo@gmail.com</div>
-        <button class="copybtn" id="copyPix">Copiar chave PIX</button>
+        <button class="copybtn" id="copyPix"></button>
         <img id="qr" class="qr" alt="QR Code para pagamento via PIX">
-        <small id="pixStatus">Aponte a câmera do celular para o QR Code.</small>
+        <small id="pixStatus"></small>
       </div>
     </div>
   </div>
@@ -82,9 +82,9 @@ footer{background:#111;color:#fff;text-align:center;padding:55px}.footername{fon
 
 <section class="details" id="presenca">
   <div class="center">
-    <div class="eyebrow">Confirmação</div>
-    <div class="title">Você vem?</div>
-    <p class="intro">Confirme sua presença para nos ajudar a organizar tudo.</p>
+    <div class="eyebrow" id="rsvpEyebrow"></div>
+    <div class="title" id="rsvpTitle"></div>
+    <p class="intro" id="rsvpIntro"></p>
   </div>
 
   <div id="notice" class="notice"></div>
@@ -109,7 +109,7 @@ footer{background:#111;color:#fff;text-align:center;padding:55px}.footername{fon
       </div>
     </div>
     <div class="field"><label>Mensagem</label><textarea id="msg"></textarea></div>
-    <button class="submit" id="submitRsvp">Confirmar presença</button>
+    <button class="submit" id="submitRsvp"></button>
   </form>
 </section>
 
@@ -129,7 +129,32 @@ const FALLBACK = {
   date_text:"05/12/2026", time_text:"14h", place:"Esplendor Garden",
   place_detail:"Salão de festas",
   havan_url:"https://lista.havan.com.br/Convidado/ItensListaPresente/960534",
-  pix_key:"marianazeurgo@gmail.com", pix_name:"MARIANA ZEURGO", pix_city:"SAO PAULO"
+  pix_key:"marianazeurgo@gmail.com", pix_name:"MARIANA ZEURGO", pix_city:"SAO PAULO",
+  hero_tag:"Chá de Panela",
+  hero_text:"Um novo capítulo começa — e queremos celebrar esse momento ao lado de quem faz parte da nossa história.",
+  intro_eyebrow:"Você é nosso convidado",
+  intro_title:"Vamos celebrar juntos?",
+  intro_text:"Preparamos este espaço para reunir todas as informações do nosso chá de panela. Sua presença será muito especial para nós.",
+  event_eyebrow:"O evento",
+  event_title:"Anote na agenda",
+  gift_eyebrow:"Com carinho",
+  gift_title:"Lista de presentes",
+  gift_intro:"Sua presença já é um presente. Mas, se quiser nos presentear, deixamos duas opções especiais para você.",
+  physical_title:"Presente físico",
+  physical_text:"Escolha o presente que quiser diretamente na nossa lista da Havan.",
+  physical_button:"Ver lista da Havan",
+  pix_title:"Presente via PIX",
+  pix_text:"Se preferir, você também pode nos presentear através do PIX.",
+  pix_label:"Chave PIX",
+  pix_copy_button:"Copiar chave PIX",
+  pix_status:"Aponte a câmera do celular para o QR Code.",
+  rsvp_eyebrow:"Confirmação",
+  rsvp_title:"Você vem?",
+  rsvp_intro:"Confirme sua presença para nos ajudar a organizar tudo.",
+  rsvp_button:"Confirmar presença",
+  success_message:"Presença registrada com sucesso! Obrigado ❤️",
+  error_message:"Não foi possível confirmar agora. Tente novamente em instantes.",
+  footer_text:"Victor & Mariana"
 };
 
 function escapeHtml(v){return String(v??"").replace(/[&<>"']/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"}[m]));}
@@ -153,6 +178,8 @@ function pixPayload(key,name,city){
 function showNotice(text,ok=true){notice.textContent=text;notice.style.background=ok?"#f4f4f2":"#eee";notice.classList.add("show");setTimeout(()=>notice.classList.remove("show"),6000);}
 
 function render(data){
+  const textIds=["heroTag","heroText","introEyebrow","introTitle","introText","eventEyebrow","eventTitle","giftEyebrow","giftTitle","giftIntro","physicalTitle","physicalText","physicalButton","pixTitle","pixText","pixLabel","pixStatus","rsvpEyebrow","rsvpTitle","rsvpIntro","submitRsvp"];
+  textIds.forEach(k=>{if(document.getElementById(k))document.getElementById(k).textContent=data[k]||"";});
   document.getElementById("dateText").textContent=data.date_text;
   document.getElementById("dayText").textContent=dayName(data.date_text);
   document.getElementById("timeText").textContent=data.time_text;
@@ -166,7 +193,7 @@ function render(data){
 }
 async function loadSettings(){
   const {data,error}=await sb.from("site_settings").select("*").eq("id",1).maybeSingle();
-  render(!error && data ? data : FALLBACK);
+  window.siteData=!error&&data?data:FALLBACK; render(window.siteData);
 }
 document.getElementById("copyPix").onclick=async()=>{
   const text=document.getElementById("pixKey").textContent;
@@ -178,8 +205,8 @@ document.getElementById("rsvp").onsubmit=async e=>{
   const payload={name:document.getElementById("nome").value.trim(),phone:document.getElementById("telefone").value.trim(),attending:document.getElementById("presencaSelect").value==="Sim, estarei presente!",companions:Number(document.getElementById("acomp").value),message:document.getElementById("msg").value.trim()};
   const {error}=await sb.from("rsvps").insert(payload);
   btn.disabled=false;btn.textContent="Confirmar presença";
-  if(error){showNotice("Não foi possível confirmar agora. Tente novamente em instantes.",false);return;}
-  showNotice("Presença registrada com sucesso! Obrigado ❤️");
+  if(error){showNotice((window.siteData&&siteData.error_message)||"Não foi possível confirmar agora. Tente novamente em instantes.",false);return;}
+  showNotice((window.siteData&&siteData.success_message)||"Presença registrada com sucesso! Obrigado ❤️");
   e.target.reset();
 };
 loadSettings();
