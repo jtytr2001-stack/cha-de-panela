@@ -91,12 +91,8 @@ footer{background:#0b0b0b;color:#fff;text-align:center;padding:43px 22px}.footer
   <div class="notice" id="notice"></div>
   <form class="form" id="rsvp">
     <div class="form-row">
-      <div class="field"><label id="nameLabel">Nome</label><input id="nome" required></div>
-      <div class="field"><label id="phoneLabel">WhatsApp</label><input id="telefone"></div>
-    </div>
-    <div class="form-row">
-      <div class="field"><label id="attendanceLabel">Presença</label><select id="presencaSelect" required><option id="attendancePlaceholder" value="">Selecione</option><option id="yesOption">Sim, estarei presente!</option><option id="noOption">Infelizmente não poderei ir</option></select></div>
-      <div class="field"><label id="companionsLabel">Acompanhantes</label><select id="acomp"><option value="0">0</option><option value="1">1</option><option value="2">2</option><option value="3">3</option></select></div>
+      <div class="field">
+<select id="acomp"><option value="0">0</option><option value="1">1</option><option value="2">2</option><option value="3">3</option></select></div>
     </div>
     <div class="field"><label id="messageLabel">Mensagem</label><textarea id="msg"></textarea></div>
     <button class="submit" id="submitRsvp">Confirmar presença →</button>
@@ -142,7 +138,7 @@ render(window.siteData);
 async function loadSettings(){if(!sb)return;try{let {data,error}=await sb.from("site_settings").select("*").eq("id",1).maybeSingle();if(error||!data)return;let d={...FALLBACK};Object.keys(FALLBACK).forEach(k=>{if(data[k]!=null&&String(data[k]).trim()!=="")d[k]=data[k]});window.siteData=d;render(d)}catch(e){}}
 loadSettings();
 copyPix.onclick=async()=>{try{await navigator.clipboard.writeText(pixKey.textContent);copyPix.textContent="Chave copiada!";setTimeout(()=>copyPix.textContent="Copiar chave PIX",1800)}catch(e){}};
-rsvp.onsubmit=async e=>{e.preventDefault();if(!sb){showNotice(FALLBACK.error_message);return}submitRsvp.disabled=true;try{let {error}=await sb.from("rsvps").insert({name:nome.value.trim(),phone:telefone.value.trim(),attending:presencaSelect.value===((window.siteData&&siteData.yes_option)||FALLBACK.yes_option),companions:Number(acomp.value||0),message:msg.value.trim()});if(error)throw error;showNotice(FALLBACK.success_message);rsvp.reset()}catch(err){showNotice(FALLBACK.error_message)}finally{submitRsvp.disabled=false}};
+rsvp.onsubmit=async e=>{e.preventDefault();if(!sb){showNotice(FALLBACK.error_message);return}submitRsvp.disabled=true;try{let {error}=await sb.from("rsvps").insert({name:nome.value.trim(),phone:telefone.value.trim(),attending:presencaSelect.value===((window.siteData&&siteData.yes_option)||FALLBACK.yes_option),message:msg.value.trim()});if(error)throw error;showNotice(FALLBACK.success_message);rsvp.reset()}catch(err){showNotice(FALLBACK.error_message)}finally{submitRsvp.disabled=false}};
 function showNotice(t){notice.textContent=t;notice.classList.add("show");setTimeout(()=>notice.classList.remove("show"),6000)}
 </script>
 </body>
