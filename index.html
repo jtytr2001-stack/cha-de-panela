@@ -91,8 +91,11 @@ footer{background:#0b0b0b;color:#fff;text-align:center;padding:43px 22px}.footer
   <div class="notice" id="notice"></div>
   <form class="form" id="rsvp">
     <div class="form-row">
-      <div class="field">
-<select id="acomp"><option value="0">0</option><option value="1">1</option><option value="2">2</option><option value="3">3</option></select></div>
+      <div class="field"><label id="nameLabel">Nome</label><input id="nome" required></div>
+      <div class="field"><label id="phoneLabel">WhatsApp</label><input id="telefone"></div>
+    </div>
+    <div class="form-row">
+      <div class="field"><label id="attendanceLabel">Presença</label><select id="presencaSelect" required><option id="attendancePlaceholder" value="">Selecione</option><option id="yesOption">Sim, estarei presente!</option><option id="noOption">Infelizmente não poderei ir</option></select></div>
     </div>
     <div class="field"><label id="messageLabel">Mensagem</label><textarea id="msg"></textarea></div>
     <button class="submit" id="submitRsvp">Confirmar presença →</button>
@@ -121,10 +124,10 @@ event_eyebrow:"O evento",event_title:"Anote na agenda",gift_eyebrow:"Com carinho
 gift_intro:"Sua presença já é um presente. Mas, se quiser nos presentear, deixamos duas opções especiais para você.",
 physical_title:"Presente físico",physical_text:"Escolha o presente que quiser diretamente na nossa lista da Havan.",physical_button:"Ver lista da Havan",
 pix_title:"Presente via PIX",pix_text:"Se preferir, você também pode nos presentear através do PIX.",pix_copy_button:"Copiar chave PIX",
-rsvp_eyebrow:"Confirmação",rsvp_title:"Você vem?",rsvp_intro:"Confirme sua presença para nos ajudar a organizar tudo.",rsvp_button:"Confirmar presença",name_label:"Nome",phone_label:"WhatsApp",attendance_label:"Presença",attendance_placeholder:"Selecione",yes_option:"Sim, estarei presente!",no_option:"Infelizmente não poderei ir",companions_label:"Acompanhantes",message_label:"Mensagem",footer_subtitle:"Chá de Panela · 2026",admin_link_text:"Área dos noivos",pix_copy_button:"Copiar chave PIX",
+rsvp_eyebrow:"Confirmação",rsvp_title:"Você vem?",rsvp_intro:"Confirme sua presença para nos ajudar a organizar tudo.",rsvp_button:"Confirmar presença",name_label:"Nome",phone_label:"WhatsApp",attendance_label:"Presença",attendance_placeholder:"Selecione",yes_option:"Sim, estarei presente!",no_option:"Infelizmente não poderei ir",message_label:"Mensagem",footer_subtitle:"Chá de Panela · 2026",admin_link_text:"Área dos noivos",pix_copy_button:"Copiar chave PIX",
 success_message:"Presença registrada com sucesso! Obrigado ❤️",error_message:"Não foi possível confirmar agora. Tente novamente em instantes.",footer_text:"Victor & Mariana"
 };
-const TEXT={coupleNames:"couple_names",heroSubtitle:"hero_subtitle",heroButton:"hero_button",heroTag:"hero_tag",heroText:"hero_text",introEyebrow:"intro_eyebrow",introTitle:"intro_title",introText:"intro_text",eventEyebrow:"event_eyebrow",eventTitle:"event_title",eventIntro:"event_intro",dateLabel:"date_label",timeLabel:"time_label",timeDetail:"time_detail",placeLabel:"place_label",giftEyebrow:"gift_eyebrow",giftTitle:"gift_title",giftIntro:"gift_intro",physicalTitle:"physical_title",physicalText:"physical_text",physicalButton:"physical_button",pixTitle:"pix_title",pixText:"pix_text",rsvpEyebrow:"rsvp_eyebrow",rsvpTitle:"rsvp_title",rsvpIntro:"rsvp_intro",submitRsvp:"rsvp_button",nameLabel:"name_label",phoneLabel:"phone_label",attendanceLabel:"attendance_label",attendancePlaceholder:"attendance_placeholder",yesOption:"yes_option",noOption:"no_option",companionsLabel:"companions_label",messageLabel:"message_label",footerSubtitle:"footer_subtitle",adminLink:"admin_link_text",footerText:"footer_text"};
+const TEXT={coupleNames:"couple_names",heroSubtitle:"hero_subtitle",heroButton:"hero_button",heroTag:"hero_tag",heroText:"hero_text",introEyebrow:"intro_eyebrow",introTitle:"intro_title",introText:"intro_text",eventEyebrow:"event_eyebrow",eventTitle:"event_title",eventIntro:"event_intro",dateLabel:"date_label",timeLabel:"time_label",timeDetail:"time_detail",placeLabel:"place_label",giftEyebrow:"gift_eyebrow",giftTitle:"gift_title",giftIntro:"gift_intro",physicalTitle:"physical_title",physicalText:"physical_text",physicalButton:"physical_button",pixTitle:"pix_title",pixText:"pix_text",rsvpEyebrow:"rsvp_eyebrow",rsvpTitle:"rsvp_title",rsvpIntro:"rsvp_intro",submitRsvp:"rsvp_button",nameLabel:"name_label",phoneLabel:"phone_label",attendanceLabel:"attendance_label",attendancePlaceholder:"attendance_placeholder",yesOption:"yes_option",noOption:"no_option",messageLabel:"message_label",footerSubtitle:"footer_subtitle",adminLink:"admin_link_text",footerText:"footer_text"};
 function dayName(v){let m=String(v||"").match(/(\d{2})\/(\d{2})\/?(\d{4})?/);if(!m)return"";let d=new Date(+m[3],+m[2]-1,+m[1]);return["Domingo","Segunda-feira","Terça-feira","Quarta-feira","Quinta-feira","Sexta-feira","Sábado"][d.getDay()]}
 function render(d){
 Object.entries(TEXT).forEach(([id,k])=>{let e=document.getElementById(id);if(e)e.textContent=d[k]??FALLBACK[k]??""});
